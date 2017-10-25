@@ -1,0 +1,39 @@
+{
+    "name": "Location",
+    "base": "PersistedModel",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "fullAddress": {
+        "type": "string"
+      },
+      "geoLat": {
+        "type": "number",
+        "dataType": "float"
+      },
+      "geoLng": {
+        "type": "number",
+        "dataType": "float"
+      }
+    },
+    "validations": [],
+    "relations": {
+      "workEvents": {
+        "type": "hasMany",
+        "model": "WorkEvent",
+        "foreignKey": "locationId",
+        "through": "HappensAt"
+      }
+    },
+    "acls": [],
+    "methods": {}
+  }
+  

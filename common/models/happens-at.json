@@ -1,0 +1,25 @@
+{
+    "name": "HappensAt",
+    "base": "PersistedModel",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {},
+    "validations": [],
+    "relations": {
+      "location": {
+        "type": "belongsTo",
+        "model": "Location",
+        "foreignKey": "locationId"
+      },
+      "workEvent": {
+        "type": "belongsTo",
+        "model": "WorkEvent",
+        "foreignKey": "eventId"
+      }
+    },
+    "acls": [],
+    "methods": {}
+  }
+  

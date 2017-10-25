@@ -1,0 +1,75 @@
+{
+    "name": "WorkEvent",
+    "base": "PersistedModel",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "forceId": false,
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "start": {
+        "type": "date"
+      },
+      "end": {
+        "type": "date"
+      },
+      "createdOn": {
+        "type": "date"
+      },
+      "modifiedOn": {
+        "type": "date"
+      }
+    },
+    "validations": [],
+    "relations": {
+      "member": {
+        "type": "belongsTo",
+        "model": "Member",
+        "foreignKey": "ownerId"
+      },
+      "locations": {
+        "type": "hasMany",
+        "model": "Location",
+        "foreignKey": "eventId",
+        "through": "HappensAt"
+      }
+    },
+    "acls": [
+      {
+        "accessType": "*",
+        "principalType": "ROLE",
+        "principalId": "$everyone",
+        "permission": "DENY"
+      },
+      {
+        "accessType": "READ",
+        "principalType": "ROLE",
+        "principalId": "$authenticated",
+        "permission": "ALLOW"
+      },
+      {
+        "accessType": "EXECUTE",
+        "principalType": "ROLE",
+        "principalId": "$authenticated",
+        "permission": "ALLOW",
+        "property": "create"
+      },
+      {
+        "accessType": "WRITE",
+        "principalType": "ROLE",
+        "principalId": "$owner",
+        "permission": "ALLOW"
+      }
+    ],
+    "methods": {}
+  }
+  

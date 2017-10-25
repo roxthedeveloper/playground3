@@ -1,0 +1,27 @@
+{
+    "name": "Member",
+    "base": "User",
+    "idInjection": true,
+    "options": {
+      "validateUpsert": true
+    },
+    "properties": {},
+    "validations": [],
+    "relations": {
+      "workEvents": {
+        "type": "hasMany",
+        "model": "WorkEvent",
+        "foreignKey": "ownerId"
+      }
+    },
+    "acls": [
+      {
+        "accessType": "*",
+        "principalType": "ROLE",
+        "principalId": "$everyone",
+        "permission": "DENY"
+      }
+    ],
+    "methods": {}
+  }
+  
