@@ -7,9 +7,7 @@ class Footer extends React.Component {
     render() {
         return (
             <Pager>
-                <Pager.Item>
-                    <Link to='/about'>About</Link>
-                </Pager.Item>
+                <Link to='/about'>About</Link>
             </Pager>
         );
     }

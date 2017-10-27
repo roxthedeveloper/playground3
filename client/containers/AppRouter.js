@@ -1,24 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getStarted } from '../actions';
-import App from '../components/App'
+//import { getStarted } from '../actions';
 
-import { BrowserRouter } from 'react-router-dom'
+import { Router } from 'react-router-dom'
+import { history } from '../helper/history'
+import Header from '../components/common/Header'
+import Main from '../components/Main/Main'
+import Footer from '../components/common/Footer'
 
-class SmartComponent extends Component {
+class AppRouter extends Component {
 	constructor(props) {
 		super(props);
 	}
-	componentWillMount() {
-		this.props.dispatch(getStarted());
-	}
+	// componentWillMount() {
+	// 	this.props.dispatch(getStarted());
+	// }
 	render() {
 		return (
-			<BrowserRouter>
-				<App />
-			</BrowserRouter>
+			<Router history={history}>
+				<div>
+					<Header />
+					<Main />
+					<Footer />
+				</div>
+			</Router>
 		);
 	}
 }
 
-export default connect(state => state)(SmartComponent);
+export default connect(state => state)(AppRouter);
