@@ -13,15 +13,13 @@ class Main extends React.Component {
     render(){
         return (
             <Jumbotron>
-                    <Col md={6} mdOffset={3}>
-                        <Switch>
-                            <AuthenticatedRoute exact path='/' component={HomePage} />
-                            <AuthenticatedRoute exact path='/home' component={HomePage} />
-                            <AuthenticatedRoute path='/user' component={UserPage} />
-                            <Route exact path='/about' component={AboutPage} />
-                            <Route exact path='/login' component={LoginPage} />
-                        </Switch>
-                    </Col>
+                <Switch>
+                    <AuthenticatedRoute exact path='/' component={HomePage} />
+                    <AuthenticatedRoute exact path='/home' component={HomePage} />
+                    <AuthenticatedRoute path='/user' component={UserPage} />
+                    <Route exact path='/about' component={AboutPage} />
+                    <Route exact path='/login' component={LoginPage} />
+                </Switch>
             </Jumbotron>
         );
     }

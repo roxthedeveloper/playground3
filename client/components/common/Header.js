@@ -7,7 +7,7 @@ class Header extends React.Component {
         var navStyle = {
             marginBottom: "0"
         }
-        let user = localStorage.getItem('user');
+        let user = JSON.parse(localStorage.getItem('user'));
         return (
             <div>
                 <Navbar style={navStyle} collapseOnSelect>
@@ -25,6 +25,7 @@ class Header extends React.Component {
                         <Nav pullRight>
                             {!user && <LinkContainer to="/login"><NavItem eventKey={4}>Log In</NavItem></LinkContainer>}
                             {!user && <LinkContainer to="/register"><NavItem eventKey={5}>Register</NavItem></LinkContainer>}
+                            {user && <NavItem><span>Hi, {user.email}</span></NavItem>}
                             {user && <LinkContainer to="/login"><NavItem eventKey={5}>Logout</NavItem></LinkContainer>}
                         </Nav>
                     </Navbar.Collapse>

@@ -31,13 +31,14 @@ function login(email, password) {
 		apiService.login(email, password)
 			.then(
 				user => {
-					console.log('got user');
+					console.log('got user', user);
 					dispatch(logInSuccess(user));
 					history.push('/');
-				},
+				})
+			.catch(
 				error => {
-					console.log('got error');
-					dispatch(logInFailed(error))
+					console.log('got error', error);
+					dispatch(logInFailed({message: 'Login failed'}))
 				}
 			);
 	};

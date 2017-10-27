@@ -1,24 +1,23 @@
 import React from 'react'
-import { connect } from 'react-redux';
+import { Button, Col, ButtonToolbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { Button, Col, ButtonToolbar, Alert } from 'react-bootstrap'
+import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap'
+import { connect } from 'react-redux';
 
 import FieldGroup from '../common/FieldGroup'
 import { userActions } from '../../actions/actions'
 
-class LoginPage extends React.Component {
+class RegisterPage extends React.Component {
     constructor(props){
         super(props);
 
-        // reset login status
-        this.props.dispatch(userActions.logout());
-
         this.state = {
-            email: '',
-            password: '',
-            submitted: false,
-            loggingIn: false,
-            error: null
+            user: {
+                username: '',
+                email: '',
+                password: '',
+            }
+            submitted: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,7 +26,11 @@ class LoginPage extends React.Component {
 
     handleChange(e){
         const { name, value } = e.target;
-        this.setState({ [name]: value });
+        const { user } = this.state;
+        this.setState({ user: {
+            ...user,
+            [name]:value
+        }});
     }
 
     handleSubmit(e){
@@ -47,16 +50,11 @@ class LoginPage extends React.Component {
             textDecoration: "none"
         }
         const { LoggingIn } = this.props;
-        const { email, password, submitted, error } = this.state;
-
-        console.log(this.state)
+        const { email, password, submitted } = this.state;
 
         return (
             <div className="container">
                 <h2>Log In</h2>
-                {error && <Alert bsStyle="danger">
-                    <strong>Error</strong>
-                </Alert>}
                 <form onSubmit={this.handleSubmit}>
                     <FieldGroup
                         id="formControlsEmail"
@@ -95,4 +93,4 @@ class LoginPage extends React.Component {
 
 // const connectedLoginPage = connect(mapStateToProps)(LoginPage);
 // export { connectedLoginPage as LoginPage }; 
-export default connect(state => state)(LoginPage);
+export default connect(state => state)(RegisterPage);
