@@ -63,7 +63,6 @@ class LoginPage extends React.Component {
                         label="Email address"
                         placeholder="Enter email"
                         onChange={this.handleChange}
-                        value={ (user)? user.email : '' }
                     />
                     <FieldGroup
                         id="formControlsPassword"
