@@ -4,7 +4,8 @@ import { history } from '../helper/history'
 
 export const userActions = {
 	login, 
-	logout
+	logout,
+	register
 };
 
 //region user logout
@@ -21,7 +22,7 @@ const logInSuccess = (user) => ({
 const logInFailed = (error) => ({
 	type: userActionTypes.USER_LOGIN_FAILED,
 	error: error
-})
+});
 
 function login(email, password) {
 	return dispatch => {
@@ -53,5 +54,43 @@ function logout(){
 	return {
 		type: userActionTypes.USER_LOGOUT
 	}
+}
+//endregion
+
+//region user registration
+const registerRequest = (email) => ({
+	type: userActionTypes.USER_REGISTER_REQUEST,
+	user: {email: email}
+});
+
+const registerSuccess = (user) => ({
+	type: userActionTypes.USER_REGISTER_SUCCESS,
+	user: user
+});
+
+const registerFailed = (error) => ({
+	type: userActionTypes.USER_REGISTER_FAILED,
+	error: error
+});
+
+function register(email, username, password) {
+	return dispatch => {
+		console.log('register!!');
+		dispatch(registerRequest);
+
+		apiService.register(email, username, password)
+			.then(
+				user => {
+					console.log('got user', user);
+					dispatch(registerSuccess(user));
+					history.push('/login');
+				})
+			.catch(
+				error => {
+					console.log('got error', error);
+					dispatch(registerFailed({message: error.data.error.message}))
+				}
+			);
+	};
 }
 //endregion

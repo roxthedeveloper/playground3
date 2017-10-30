@@ -2,18 +2,23 @@ import Axios from 'axios'
 
 export const apiService = {
     login,
-    logout
+    logout,
+    register
 }
 
 const apiUrl = "http://localhost:8850/api";
 
 Axios.interceptors.response.use(function (response) {
+    //console.log('response intercepted:', response);
     return response;
 }, function (error) {
-    // Intercept 401 error and return fake response
-    console.log('error intercepted:', error);
+    // Intercept 4XX error and forward
+    let res = error.response;
+    //console.log('error intercepted:', res);
     return {
-        status: 401
+        status: res.status,
+        statusText: res.statusText,
+        data: res.data
     };
 });
 
@@ -28,7 +33,7 @@ function login(email, password) {
     .then(function (response) {
         console.log("response:", response)
         if(response.status != 200){
-            return Promise.reject(response.statusText);
+            return Promise.reject(response);
         }
 
         return {
@@ -45,11 +50,6 @@ function login(email, password) {
             return user;
         }
     })
-    .then(error => {
-        return {
-            message: 'Login failed'
-        }
-    })
 }
 //endregion
 
@@ -63,5 +63,35 @@ function logout(token){
         localStorage.removeItem('user');
     }
 }
+//endregion
 
+//region registration
+function register(email, username, password) {
+    console.log('api register');
+
+    return Axios.post(`${apiUrl}/Members`,{
+        email: email,
+        username: username,
+        password: password
+    })
+    .then(function (response) {
+        console.log("response:", response)
+        if(response.status != 200){
+            return Promise.reject(response);
+        }
+
+        return {
+            id: response.data.id,
+            token: '',
+            email: email,
+            username: username
+        };
+    })
+    .then(user => {
+        console.log('user=>', user)
+        if(user && user.id) {
+            return user;
+        }
+    })
+}
 //endregion

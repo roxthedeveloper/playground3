@@ -17,8 +17,6 @@ class LoginPage extends React.Component {
             email: '',
             password: '',
             submitted: false,
-            loggingIn: false,
-            error: null
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,7 +35,6 @@ class LoginPage extends React.Component {
         const { email, password } = this.state;
         const { dispatch } = this.props;
         if( email && password ) {
-            console.log('ready to dispatch!');
             dispatch(userActions.login(email, password));
         }
     }
@@ -46,16 +43,17 @@ class LoginPage extends React.Component {
         var linkStyle = {
             textDecoration: "none"
         }
-        const { LoggingIn } = this.props;
-        const { email, password, submitted, error } = this.state;
+        const { loggingIn, error, user } = this.props;
+        const { email, password, submitted } = this.state;
 
-        console.log(this.state)
+        console.log('LoginPage state', this.state)
+        console.log('LoginPage props', this.props)
 
         return (
             <div className="container">
                 <h2>Log In</h2>
                 {error && <Alert bsStyle="danger">
-                    <strong>Error</strong>
+                    <strong>Error</strong> {error.message}
                 </Alert>}
                 <form onSubmit={this.handleSubmit}>
                     <FieldGroup
@@ -65,6 +63,7 @@ class LoginPage extends React.Component {
                         label="Email address"
                         placeholder="Enter email"
                         onChange={this.handleChange}
+                        value={ (user)? user.email : '' }
                     />
                     <FieldGroup
                         id="formControlsPassword"
@@ -85,14 +84,10 @@ class LoginPage extends React.Component {
 }
 
 // //export default LoginPage
-// function mapStateToProps(state) {
-//     console.log('fufu');
-//     const { loggingIn } = false;//state.authentication;
-//     return {
-//         loggingIn
-//     };
-// }
-
-// const connectedLoginPage = connect(mapStateToProps)(LoginPage);
-// export { connectedLoginPage as LoginPage }; 
-export default connect(state => state)(LoginPage);
+function mapStateToProps(state) {
+    return ({
+        error: state.authentication.error,
+        loggingIn: state.authentication.loggingIn
+    });
+}
+export default connect(mapStateToProps)(LoginPage);

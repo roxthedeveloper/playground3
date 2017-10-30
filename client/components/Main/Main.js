@@ -8,6 +8,7 @@ import HomePage from '../HomePage/HomePage'
 import AboutPage from '../AboutPage/AboutPage'
 import UserPage from '../UserPage/Users'
 import LoginPage from '../LoginPage/LoginPage'
+import RegisterPage from '../RegisterPage/RegisterPage'
 
 class Main extends React.Component {
     render(){
@@ -19,6 +20,7 @@ class Main extends React.Component {
                     <AuthenticatedRoute path='/user' component={UserPage} />
                     <Route exact path='/about' component={AboutPage} />
                     <Route exact path='/login' component={LoginPage} />
+                    <Route exact path='/register' component={RegisterPage} />
                 </Switch>
             </Jumbotron>
         );
