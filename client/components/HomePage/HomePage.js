@@ -1,13 +1,59 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const HomePage = () => {
-  return (
-    <div>
-      <h1>Home Page</h1>
+import { taskActions } from '../../actions/actions'
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquam architecto at exercitationem ipsa iste molestiae nobis odit! Error quo reprehenderit velit! Aperiam eius non odio optio, perspiciatis suscipit vel?</p>
-    </div>
-  );
-};
+class HomePage extends React.Component {
+    constructor(props){
+        super(props);
 
-export default HomePage;
+        this.state = {
+            message: 'not at bottom',
+            tasks: []
+        };
+
+        this.handleScroll = this.handleScroll.bind(this);
+    }
+
+    handleScroll(){
+        const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeigh;
+        const body = document.body;
+        const html = document.documentElement;
+        const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+        const windowBottom = windowHeight + window.pageYOffset;
+        if (windowBottom >= docHeight) {
+            this.setState({
+                message: 'bottom reached'
+            });
+        }else{
+            this.setState({
+                message: 'not at bottom'
+            });
+        }
+    }
+
+    componentDidMount(){
+        console.log('component did mount');
+        const { dispatch } = this.props;
+        dispatch(taskActions.getTaskList('email', 'password'));
+        window.addEventListener('scroll', this.handleScroll);
+    }
+
+    componentWillUnMount(){
+        console.log('component will unmount');
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    render(){
+      return (
+          <div className="container">
+              <h2>Upcoming events</h2>
+              <div><span>Please wait...</span></div>
+              <div>{this.state.message}</div>
+          </div>
+      );
+    }
+
+}
+
+export default connect(state => state)(HomePage);

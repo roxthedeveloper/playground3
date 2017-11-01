@@ -3,7 +3,8 @@ import Axios from 'axios'
 export const apiService = {
     login,
     logout,
-    register
+    register,
+    getTaskList
 }
 
 const apiUrl = "http://localhost:8850/api";
@@ -56,7 +57,7 @@ function login(email, password) {
 //region logout
 function logout(token){
     console.log('api logout');
-    let user = JSON.parse(localStorage.getItem('user'));
+    let user = JSON.parse(localStorage.getItem('user')); //TODO: move out
     console.log(user)
     if(user && user.id){
         Axios.post(`${apiUrl}/Members/logout?access_token=${user.token}`);
@@ -93,5 +94,14 @@ function register(email, username, password) {
             return user;
         }
     })
+}
+//endregion
+
+//region getTaskList
+function getTaskList(userId, token) {
+    console.log('api getTaskList');
+    let user = JSON.parse(localStorage.getItem('user')); //TODO: move out
+    return Axios.get(`${apiUrl}/WorkEvents?access_token=${user.token}`)
+        //.then();
 }
 //endregion
