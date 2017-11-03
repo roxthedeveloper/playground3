@@ -86,7 +86,8 @@ class LoginPage extends React.Component {
 function mapStateToProps(state) {
     return ({
         error: state.authentication.error,
-        loggingIn: state.authentication.loggingIn
+        loggingIn: state.authentication.loggingIn,
+        user: state.authentication.user
     });
 }
 export default connect(mapStateToProps)(LoginPage);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 import { taskActions } from '../../actions/actions'
 
@@ -9,7 +10,6 @@ class HomePage extends React.Component {
 
         this.state = {
             message: 'not at bottom',
-            tasks: []
         };
 
         this.handleScroll = this.handleScroll.bind(this);
@@ -45,15 +45,43 @@ class HomePage extends React.Component {
     }
 
     render(){
-      return (
-          <div className="container">
-              <h2>Upcoming events</h2>
-              <div><span>Please wait...</span></div>
-              <div>{this.state.message}</div>
-          </div>
-      );
+        const { fetchingData, error, tasks } = this.props;
+
+        console.log('LoginPage state', this.state)
+        console.log('LoginPage props', this.props)
+        
+        return (
+            <div className="container">
+                <h2>Upcoming events</h2>
+                <div>{this.state.message}</div>
+                { fetchingData && <div><span>Please wait...</span></div> }
+                { tasks && 
+                    <Grid>
+                    { 
+                        tasks.map((task) => 
+                            <Row key={task.id} className="show-grid">
+                                <Col xs={12} md={12} lg={12}>
+                                    <h3>{task.type} - {task.start}</h3>
+                                    <h4>{task.title}</h4>
+                                    <span>{task.description}</span>
+                                    <hr/>
+                                </Col>
+                            </Row>
+                        )
+                    }
+                    </Grid>
+                }
+            </div>
+        );
     }
 
 }
 
-export default connect(state => state)(HomePage);
+function mapStateToProps(state) {
+    return ({
+        error: state.taskList.error,
+        fetchingData: state.taskList.fetchingData,
+        tasks: state.taskList.tasks
+    });
+}
+export default connect(mapStateToProps)(HomePage);

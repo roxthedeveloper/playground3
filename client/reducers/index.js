@@ -27,7 +27,10 @@ function authentication (state = initialState, action) {
 				error: action.error
 			};
 		case actionTypes.USER_LOGOUT:
-			return {};
+			return {
+				loggedIn: false,
+				user: null
+			};
 		default:
 			return state;
 	}
@@ -48,7 +51,8 @@ function registration(state = {}, action) {
 		case actionTypes.USER_REGISTER_FAILED:
 			console.log('login failed action', action)
 			return {
-				error: action.error
+				error: action.error,
+				registering: false
 			};
 		default:
 			return state;
@@ -56,9 +60,36 @@ function registration(state = {}, action) {
 }
 //endregion
 
+//region tasklist
+function taskList(state = {}, action) {
+	switch(action.type) {
+		case actionTypes.TASK_GETTASKLIST_REQUEST:
+			console.log('get task action', action)
+			return {
+				fetchingData: true
+			}
+		case actionTypes.TASK_GETTASKLIST_SUCCESS:
+			console.log('get task action', action)
+			return {
+				fetchingData: false,
+				tasks: action.tasks,
+				error: null
+			}
+		case actionTypes.TASK_GETTASKLIST_FAILED:
+			console.log('get task action', action)
+			return {
+				fetchingData: false,
+				error: action.error
+			}
+		default:
+			return state;
+	}
+}
+
 const rootReducer = combineReducers({
 	authentication,
-	registration
+	registration,
+	taskList
   });
 
 export default rootReducer;

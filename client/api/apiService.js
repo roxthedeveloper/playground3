@@ -101,7 +101,19 @@ function register(email, username, password) {
 function getTaskList(userId, token) {
     console.log('api getTaskList');
     let user = JSON.parse(localStorage.getItem('user')); //TODO: move out
-    return Axios.get(`${apiUrl}/WorkEvents?access_token=${user.token}`)
-        //.then();
+    return Axios.get(`${apiUrl}/WorkEvents?filter=%7B%22where%22%3A%7B%22ownerId%22%3A%22${user.id}%22%7D%7D&access_token=${user.token}`)
+        .then(function(response){
+            console.log('getTaskList response', response)
+
+            if(response.status != 200){
+                return Promise.reject(response);
+            }
+
+            return response.data;
+        })
+        .then(tasks => {
+            console.log('tasks=>', tasks)
+            return tasks;
+        });
 }
 //endregion

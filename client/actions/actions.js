@@ -129,7 +129,11 @@ function getTaskList(userId, token) {
 			.catch(
 				error => {
 					console.log('got error', error);
-					dispatch(getTaskListFailed({message: 'Get Task List failed'}))
+					if(error.status == 401) {
+						localStorage.removeItem('user');
+						history.push('/');
+					}
+					dispatch(getTaskListFailed({message: 'Get Task List failed'}));
 				}
 			);
 	};
