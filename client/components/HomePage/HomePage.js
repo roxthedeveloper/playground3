@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, Alert } from 'react-bootstrap';
 
 import { taskActions } from '../../actions/actions'
+import TaskRow from '../common/TaskRow';
 
 class HomePage extends React.Component {
     constructor(props){
@@ -52,21 +53,17 @@ class HomePage extends React.Component {
         
         return (
             <div className="container">
-                <h2>Upcoming events</h2>
-                <div>{this.state.message}</div>
+                {/* <h2>Upcoming events</h2> */}
+                <Alert bsStyle="warning">{this.state.message}</Alert>
                 { fetchingData && <div><span>Please wait...</span></div> }
                 { tasks && 
                     <Grid>
                     { 
                         tasks.map((task) => 
-                            <Row key={task.id} className="show-grid">
-                                <Col xs={12} md={12} lg={12}>
-                                    <h3>{task.type} - {task.start}</h3>
-                                    <h4>{task.title}</h4>
-                                    <span>{task.description}</span>
-                                    <hr/>
-                                </Col>
-                            </Row>
+                            <div>
+                                <TaskRow key={task.id} task={task}></TaskRow>
+                                <hr />
+                            </div>
                         )
                     }
                     </Grid>
