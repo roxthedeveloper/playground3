@@ -10,10 +10,10 @@ class Header extends React.Component {
         let user = JSON.parse(localStorage.getItem('user'));
         return (
             <div>
-                <Navbar style={navStyle} collapseOnSelect>
+                <Navbar className="navbar-fixed-top" style={navStyle} collapseOnSelect>
                     <Navbar.Header>
                         <Navbar.Brand>
-                            <a href="#">Playground 3</a>
+                            Playground 3
                         </Navbar.Brand>
                         <Navbar.Toggle />
                     </Navbar.Header>

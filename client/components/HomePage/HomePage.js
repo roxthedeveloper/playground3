@@ -22,14 +22,16 @@ class HomePage extends React.Component {
         const html = document.documentElement;
         const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
         const windowBottom = windowHeight + window.pageYOffset;
-        if (windowBottom >= docHeight) {
-            this.setState({
-                message: 'bottom reached'
-            });
-        }else{
-            this.setState({
-                message: 'not at bottom'
-            });
+        if (this.refs.testAlert){
+            if (windowBottom >= docHeight) {
+                this.setState({
+                    message: 'bottom reached'
+                });
+            }else{
+                this.setState({
+                    message: 'not at bottom'
+                });
+            }    
         }
     }
 
@@ -52,18 +54,15 @@ class HomePage extends React.Component {
         console.log('LoginPage props', this.props)
         
         return (
-            <div className="container">
+            <div>
                 {/* <h2>Upcoming events</h2> */}
-                <Alert bsStyle="warning">{this.state.message}</Alert>
+                {/* <Alert bsStyle="warning" ref="testAlert">{this.state.message}</Alert> */}
                 { fetchingData && <div><span>Please wait...</span></div> }
                 { tasks && 
                     <Grid>
                     { 
                         tasks.map((task) => 
-                            <div>
-                                <TaskRow key={task.id} task={task}></TaskRow>
-                                <hr />
-                            </div>
+                            <TaskRow key={task.id} task={task}></TaskRow>
                         )
                     }
                     </Grid>

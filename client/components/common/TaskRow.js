@@ -1,6 +1,8 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 
+import CalendarCircle from './CalendarCircle'
+
 
 Date.dateDiff = function(datepart, fromdate, todate) {	
     datepart = datepart.toLowerCase();	
@@ -16,32 +18,37 @@ Date.dateDiff = function(datepart, fromdate, todate) {
 
 class TaskRow extends React.Component {
     render(){
+        var rowStyle = {
+            backgroundColor: "white", 
+            padding:"10px 15px", 
+            margin:"10px", 
+            boxShadow: "2px 2px 5px grey",
+            borderRadius: "5px"
+        }
+
         let { task } = this.props;
         var startDate = new Date(task.start);
         var endDate = new Date(task.end);
         var diffInHours = Date.dateDiff('h', startDate, endDate);
-        var startDateStr = startDate.toDateString().split(' '); //e.g. Sat Nov 4 2017
 
         return (
-            <Row className="show-grid" style={{borderColor: "black"}}>
-                <Col xs={3} md={3} lg={3}>
-                    <div style={{textAlign:"center", color:"#686868"}}>
-                        <h6><b>{startDateStr[0].toUpperCase()}</b></h6>
-                        <h3 style={{marginTop:"10px"}}>{startDateStr[1]} {startDateStr[2]}</h3>
-                        <h4>{startDateStr[3]}</h4>
-                    </div>
-                </Col>
-                <Col xs={6} md={6} lg={6}>
-                    <div>
-                        <h5><b>{task.title.toUpperCase()}</b></h5>
-                        <h5><b>Type:</b> {task.type}</h5>
-                        <h5><b>Coverage:</b> {diffInHours}Hrs</h5>
-                        <span>{task.description}</span>
-                    </div>
-                </Col>
-                <Col xs={3} md={3} lg={3}>
-                </Col>
-            </Row>
+            <div style={rowStyle}>
+                <Row className="show-grid">
+                    <Col xs={3} md={3} lg={3}>
+                        <CalendarCircle date={task.start}></CalendarCircle>
+                    </Col>
+                    <Col xs={6} md={6} lg={6}>
+                        <div>
+                            <h5><b>{task.title.toUpperCase()}</b></h5>
+                            <h5><b>Type:</b> {task.type}</h5>
+                            <h5><b>Coverage:</b> {diffInHours}Hrs</h5>
+                            <span>{task.description}</span>
+                        </div>
+                    </Col>
+                    <Col xs={3} md={3} lg={3}>
+                    </Col>
+                </Row>
+            </div>
         );
     }
 }
