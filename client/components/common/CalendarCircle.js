@@ -19,9 +19,10 @@ class CalendarCircle extends React.Component {
             minWidth: "100px",
             minHeight: "100px"
         };
-        var dayDiffStyle = { color: "#FF4136" };
+        var dayDiffStyle = { color: "#AAAAAA" };
         
-        let { date } = this.props;
+        let { date, showDiffInDays } = this.props;
+
         var taskDate = new Date(date);
         var today = new Date();
         var dateStr = taskDate.toDateString().split(' '); //e.g. Sat Nov 4 2017
@@ -46,9 +47,11 @@ class CalendarCircle extends React.Component {
                     <span style={dateStyle}>{dateStr[1]} {dateStr[2]}</span><br/>
                     <span style={yearStyle}>{dateStr[3]}</span>
                 </div>
-                <div style={dayDiffStyle}>
-                    <span><b>{daysMessage}</b></span>
-                </div>
+                { showDiffInDays && 
+                    <div style={dayDiffStyle}>
+                        <span><b>{daysMessage}</b></span>
+                    </div>
+                }
             </div>
         );
     }

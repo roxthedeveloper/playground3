@@ -34,7 +34,7 @@ function login(email, password) {
 				user => {
 					console.log('got user', user);
 					dispatch(logInSuccess(user));
-					history.push('/');
+					history.push('/addTask'); //TODO: history.push('/');
 				})
 			.catch(
 				error => {

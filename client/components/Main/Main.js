@@ -9,6 +9,7 @@ import AboutPage from '../AboutPage/AboutPage'
 import UserPage from '../UserPage/Users'
 import LoginPage from '../LoginPage/LoginPage'
 import RegisterPage from '../RegisterPage/RegisterPage'
+import AddTaskPage from '../AddTaskPage/AddTaskPage'
 
 class Main extends React.Component {
     render(){
@@ -19,6 +20,7 @@ class Main extends React.Component {
                         <AuthenticatedRoute exact path='/' component={HomePage} />
                         <AuthenticatedRoute exact path='/home' component={HomePage} />
                         <AuthenticatedRoute path='/user' component={UserPage} />
+                        <AuthenticatedRoute exact path='/addTask' component={AddTaskPage} />
                         <Route exact path='/about' component={AboutPage} />
                         <Route exact path='/login' component={LoginPage} />
                         <Route exact path='/register' component={RegisterPage} />

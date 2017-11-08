@@ -20,6 +20,7 @@ class Header extends React.Component {
                     <Navbar.Collapse>
                         <Nav>
                             <LinkContainer to="/home"><NavItem eventKey={1}>Home</NavItem></LinkContainer>
+                            <LinkContainer to="/addTask"><NavItem eventKey={2}>Add</NavItem></LinkContainer> {/* TODO: remove */}
                             <LinkContainer to="/users"><NavItem eventKey={2}>User</NavItem></LinkContainer>
                         </Nav>
                         <Nav pullRight>
