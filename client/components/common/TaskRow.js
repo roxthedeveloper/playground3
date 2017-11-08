@@ -2,19 +2,7 @@ import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 
 import CalendarCircle from './CalendarCircle'
-
-
-Date.dateDiff = function(datepart, fromdate, todate) {	
-    datepart = datepart.toLowerCase();	
-    var diff = todate - fromdate;	
-    var divideBy = { w:604800000, 
-                     d:86400000, 
-                     h:3600000, 
-                     n:60000, 
-                     s:1000 };	
-    
-    return Math.floor( diff/divideBy[datepart]);
-}
+import { dateHelper } from '../../helper/dates'
 
 class TaskRow extends React.Component {
     render(){
@@ -29,7 +17,7 @@ class TaskRow extends React.Component {
         let { task } = this.props;
         var startDate = new Date(task.start);
         var endDate = new Date(task.end);
-        var diffInHours = Date.dateDiff('h', startDate, endDate);
+        var diffInHours = dateHelper.dateDiff('h', startDate, endDate);
 
         return (
             <div style={rowStyle}>

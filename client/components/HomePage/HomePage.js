@@ -52,6 +52,19 @@ class HomePage extends React.Component {
 
         console.log('LoginPage state', this.state)
         console.log('LoginPage props', this.props)
+
+        var sortTasks;
+        if(tasks){
+            sortTasks = tasks.sort(function(t1, t2){
+                var t1Date = new Date(t1.start);
+                var t2Date = new Date(t2.start);
+                if(t1Date > t2Date) return 1;
+                else if(t1Date < t2Date) return -1;
+                else return 0;
+            });
+        }
+
+        console.log('sortTasks', sortTasks)
         
         return (
             <div>
@@ -61,7 +74,7 @@ class HomePage extends React.Component {
                 { tasks && 
                     <Grid>
                     { 
-                        tasks.map((task) => 
+                        sortTasks.map((task) => 
                             <TaskRow key={task.id} task={task}></TaskRow>
                         )
                     }

@@ -1,31 +1,54 @@
 import React from 'react'
 
+import { dateHelper } from '../../helper/dates'
+
 class CalendarCircle extends React.Component {
     render(){
         var dayStyle = { fontSize: "12px", margin: "5px 10px", fontWeight: "bold" };
         var dateStyle = { fontSize: "20px", margin: "5px 10px" };
         var yearStyle = { fontSize: "12px", margin: "5px 10px" };
-        var mainStyle = {
-            textAlign:"center", 
+        var mainStyle = { textAlign:"center" }
+        var circleStyle = {
             color:"white", 
             margin: "10px 5px",
             padding: "15px 5px",
-            background: "#A4A4A4",
+            background: "#AAAAAA",
             borderRadius: "50%",
             width: "100px",
             height: "100px",
             minWidth: "100px",
             minHeight: "100px"
         };
-
+        var dayDiffStyle = { color: "#FF4136" };
+        
         let { date } = this.props;
-        var dateStr = (new Date(date)).toDateString().split(' '); //e.g. Sat Nov 4 2017
+        var taskDate = new Date(date);
+        var today = new Date();
+        var dateStr = taskDate.toDateString().split(' '); //e.g. Sat Nov 4 2017
+        var diffInDays = dateHelper.dateDiff('d', today, taskDate) + 1;
+        var diffInDaysPercentage = 1 - (Math.abs(diffInDays)/365);
+
+        var daysMessage = "";
+        if(diffInDays == 0) {
+            daysMessage = "Today";
+        }else if(diffInDays > 0) {
+            dayDiffStyle = { ...dayDiffStyle, opacity: "" + diffInDaysPercentage };
+            daysMessage = "In " + diffInDays + " Days";
+        }else if(diffInDays < 0) {
+            dayDiffStyle = { ...dayDiffStyle, opacity: "" + diffInDaysPercentage };
+            daysMessage = Math.abs(diffInDays) + " Days Ago";
+        }
 
         return (
             <div style={mainStyle}>
-                <span style={dayStyle}>{dateStr[0].toUpperCase()}</span><br/>
-                <span style={dateStyle}>{dateStr[1]} {dateStr[2]}</span><br/>
-                <span style={yearStyle}>{dateStr[3]}</span>
+                <div style={circleStyle}>
+                    <span style={dayStyle}>{dateStr[0].toUpperCase()}</span><br/>
+                    <span style={dateStyle}>{dateStr[1]} {dateStr[2]}</span><br/>
+                    <span style={yearStyle}>{dateStr[3]}</span>
+                </div>
+                <div style={dayDiffStyle}>
+                    <span><b>{daysMessage}</b></span>
+                </div>
             </div>
         );
     }
