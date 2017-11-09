@@ -4,7 +4,7 @@ export const apiService = {
     login,
     logout,
     register,
-    getTaskList
+    getWorkEventList
 }
 
 const apiUrl = "http://localhost:8850/api";
@@ -97,13 +97,13 @@ function register(email, username, password) {
 }
 //endregion
 
-//region getTaskList
-function getTaskList(userId, token) {
-    console.log('api getTaskList');
+//region getWorkEventList
+function getWorkEventList(userId, token) {
+    console.log('api getWorkEventList');
     let user = JSON.parse(localStorage.getItem('user')); //TODO: move out
     return Axios.get(`${apiUrl}/WorkEvents?filter=%7B%22where%22%3A%7B%22ownerId%22%3A%22${user.id}%22%7D%7D&access_token=${user.token}`)
         .then(function(response){
-            console.log('getTaskList response', response)
+            console.log('getWorkEventList response', response)
 
             if(response.status != 200){
                 return Promise.reject(response);
@@ -111,9 +111,9 @@ function getTaskList(userId, token) {
 
             return response.data;
         })
-        .then(tasks => {
-            console.log('tasks=>', tasks)
-            return tasks;
+        .then(workevents => {
+            console.log('workevents=>', workevents)
+            return workevents;
         });
 }
 //endregion

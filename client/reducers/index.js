@@ -60,23 +60,23 @@ function registration(state = {}, action) {
 }
 //endregion
 
-//region tasklist
-function taskList(state = {}, action) {
+//region workeventlist
+function workeventList(state = {}, action) {
 	switch(action.type) {
-		case actionTypes.TASK_GETTASKLIST_REQUEST:
-			console.log('get task action', action)
+		case actionTypes.WORKEVENT_GETLIST_REQUEST:
+			console.log('get workevent action', action)
 			return {
 				fetchingData: true
 			}
-		case actionTypes.TASK_GETTASKLIST_SUCCESS:
-			console.log('get task action', action)
+		case actionTypes.WORKEVENT_GETLIST_SUCCESS:
+			console.log('get workevent action', action)
 			return {
 				fetchingData: false,
-				tasks: action.tasks,
+				workevents: action.workevents,
 				error: null
 			}
-		case actionTypes.TASK_GETTASKLIST_FAILED:
-			console.log('get task action', action)
+		case actionTypes.WORKEVENT_GETLIST_FAILED:
+			console.log('get workevent action', action)
 			return {
 				fetchingData: false,
 				error: action.error
@@ -89,7 +89,7 @@ function taskList(state = {}, action) {
 const rootReducer = combineReducers({
 	authentication,
 	registration,
-	taskList
+	workeventList
   });
 
 export default rootReducer;

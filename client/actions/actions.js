@@ -8,7 +8,7 @@ export const userActions = {
 	register
 };
 
-//region user logout
+//region user login
 const logInRequest = (email) => ({
 	type: actionTypes.USER_LOGIN_REQUEST,
 	user: {email: email}
@@ -34,7 +34,7 @@ function login(email, password) {
 				user => {
 					console.log('got user', user);
 					dispatch(logInSuccess(user));
-					history.push('/addTask'); //TODO: history.push('/');
+					history.push('/addEvent'); //TODO: history.push('/');
 				})
 			.catch(
 				error => {
@@ -96,35 +96,35 @@ function register(email, username, password) {
 //endregion
 
 
-export const taskActions = {
-	getTaskList
+export const workeventActions = {
+	getWorkEventList
 }
 
-//region task loadtasklist
-const getTaskListRequest = () => ({
-	type: actionTypes.TASK_GETTASKLIST_REQUEST
+//region workevent loadworkeventlist
+const getWorkEventListRequest = () => ({
+	type: actionTypes.WORKEVENT_GETLIST_REQUEST
 });
 
-const getTaskListSuccess = (tasks) => ({
-	type: actionTypes.TASK_GETTASKLIST_SUCCESS,
-	tasks: tasks
+const getWorkEventListSuccess = (workevents) => ({
+	type: actionTypes.WORKEVENT_GETLIST_SUCCESS,
+	workevents: workevents
 });
 
-const getTaskListFailed = (error) => ({
-	type: actionTypes.TASK_GETTASKLIST_FAILED,
+const getWorkEventListFailed = (error) => ({
+	type: actionTypes.WORKEVENT_GETLIST_FAILED,
 	error: error
 });
 
-function getTaskList(userId, token) {
+function getWorkEventList(userId, token) {
 	return dispatch => {
-		console.log('getTaskList!!');
-		dispatch(getTaskListRequest);
+		console.log('getWorkEventList!!');
+		dispatch(getWorkEventListRequest);
 
-		apiService.getTaskList(userId, token)
+		apiService.getWorkEventList(userId, token)
 			.then(
-				tasks => {
-					console.log('got tasks', tasks);
-					dispatch(getTaskListSuccess(tasks));
+				workevents => {
+					console.log('got workevents', workevents);
+					dispatch(getWorkEventListSuccess(workevents));
 				})
 			.catch(
 				error => {
@@ -133,7 +133,7 @@ function getTaskList(userId, token) {
 						localStorage.removeItem('user');
 						history.push('/');
 					}
-					dispatch(getTaskListFailed({message: 'Get Task List failed'}));
+					dispatch(getWorkEventListFailed({message: 'Get WorkEvent List failed'}));
 				}
 			);
 	};

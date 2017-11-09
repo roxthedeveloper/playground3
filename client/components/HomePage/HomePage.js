@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col, Alert } from 'react-bootstrap';
 
-import { taskActions } from '../../actions/actions'
-import TaskRow from '../common/TaskRow';
+import { workeventActions } from '../../actions/actions'
+import WorkEventRow from '../common/WorkEventRow';
 
 class HomePage extends React.Component {
     constructor(props){
@@ -38,7 +38,7 @@ class HomePage extends React.Component {
     componentDidMount(){
         console.log('component did mount');
         const { dispatch } = this.props;
-        dispatch(taskActions.getTaskList('email', 'password'));
+        dispatch(workeventActions.getWorkEventList('email', 'password'));
         window.addEventListener('scroll', this.handleScroll);
     }
 
@@ -48,14 +48,14 @@ class HomePage extends React.Component {
     }
 
     render(){
-        const { fetchingData, error, tasks } = this.props;
+        const { fetchingData, error, workevents } = this.props;
 
         console.log('LoginPage state', this.state)
         console.log('LoginPage props', this.props)
 
-        var sortTasks;
-        if(tasks){
-            sortTasks = tasks.sort(function(t1, t2){
+        var sortWorkEvents;
+        if(workevents){
+            sortWorkEvents = workevents.sort(function(t1, t2){
                 var t1Date = new Date(t1.start);
                 var t2Date = new Date(t2.start);
                 if(t1Date > t2Date) return 1;
@@ -64,18 +64,18 @@ class HomePage extends React.Component {
             });
         }
 
-        console.log('sortTasks', sortTasks)
+        console.log('sortWorkEvents', sortWorkEvents)
         
         return (
             <div>
                 {/* <h2>Upcoming events</h2> */}
                 {/* <Alert bsStyle="warning" ref="testAlert">{this.state.message}</Alert> */}
                 { fetchingData && <div><span>Please wait...</span></div> }
-                { tasks && 
+                { workevents && 
                     <Grid>
                     { 
-                        sortTasks.map((task) => 
-                            <TaskRow key={task.id} task={task}></TaskRow>
+                        sortWorkEvents.map((workevent) => 
+                            <WorkEventRow key={workevent.id} workevent={workevent}></WorkEventRow>
                         )
                     }
                     </Grid>
@@ -88,9 +88,9 @@ class HomePage extends React.Component {
 
 function mapStateToProps(state) {
     return ({
-        error: state.taskList.error,
-        fetchingData: state.taskList.fetchingData,
-        tasks: state.taskList.tasks
+        error: state.workeventList.error,
+        fetchingData: state.workeventList.fetchingData,
+        workevents: state.workeventList.workevents
     });
 }
 export default connect(mapStateToProps)(HomePage);

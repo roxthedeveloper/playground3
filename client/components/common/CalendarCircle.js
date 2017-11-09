@@ -23,10 +23,10 @@ class CalendarCircle extends React.Component {
         
         let { date, showDiffInDays } = this.props;
 
-        var taskDate = new Date(date);
+        var workeventDate = new Date(date);
         var today = new Date();
-        var dateStr = taskDate.toDateString().split(' '); //e.g. Sat Nov 4 2017
-        var diffInDays = dateHelper.dateDiff('d', today, taskDate) + 1;
+        var dateStr = workeventDate.toDateString().split(' '); //e.g. Sat Nov 4 2017
+        var diffInDays = dateHelper.dateDiff('d', today, workeventDate) + 1;
         var diffInDaysPercentage = 1 - (Math.abs(diffInDays)/365);
 
         var daysMessage = "";

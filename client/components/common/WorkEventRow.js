@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import CalendarCircle from './CalendarCircle'
 import { dateHelper } from '../../helper/dates'
 
-class TaskRow extends React.Component {
+class WorkEventRow extends React.Component {
     render(){
         var rowStyle = {
             backgroundColor: "white", 
@@ -15,23 +15,23 @@ class TaskRow extends React.Component {
             borderRadius: "5px"
         }
 
-        let { task } = this.props;
-        var startDate = new Date(task.start);
-        var endDate = new Date(task.end);
+        let { workevent } = this.props;
+        var startDate = new Date(workevent.start);
+        var endDate = new Date(workevent.end);
         var diffInHours = dateHelper.dateDiff('h', startDate, endDate);
 
         return (
             <div style={rowStyle}>
                 <Row className="show-grid">
                     <Col xs={3} md={3} lg={3}>
-                        <CalendarCircle date={task.start} showDiffInDays={true}></CalendarCircle>
+                        <CalendarCircle date={workevent.start} showDiffInDays={true}></CalendarCircle>
                     </Col>
                     <Col xs={6} md={6} lg={6}>
                         <div>
-                            <h5><b>{task.title.toUpperCase()}</b></h5>
-                            <h5><b>Type:</b> {task.type}</h5>
+                            <h5><b>{workevent.title.toUpperCase()}</b></h5>
+                            <h5><b>Type:</b> {workevent.type}</h5>
                             <h5><b>Coverage:</b> {diffInHours}Hrs</h5>
-                            <span>{task.description}</span>
+                            <span>{workevent.description}</span>
                         </div>
                     </Col>
                     <Col xs={3} md={3} lg={3}>
@@ -47,4 +47,4 @@ class TaskRow extends React.Component {
     }
 }
 
-export default TaskRow
+export default WorkEventRow
