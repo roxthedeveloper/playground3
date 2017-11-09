@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 
 import FieldGroup from '../common/FieldGroup'
-import { userActions } from '../../actions/actions'
+import { userActions } from '../../actions/actions.user'
 
 class RegisterPage extends React.Component {
     constructor(props){

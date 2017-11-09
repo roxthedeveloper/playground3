@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Button, Col, ButtonToolbar, Alert } from 'react-bootstrap'
 
 import FieldGroup from '../common/FieldGroup'
-import { userActions } from '../../actions/actions'
+import { userActions } from '../../actions/actions.user'
 
 class LoginPage extends React.Component {
     constructor(props){

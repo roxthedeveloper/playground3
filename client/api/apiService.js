@@ -4,7 +4,8 @@ export const apiService = {
     login,
     logout,
     register,
-    getWorkEventList
+    getWorkEventList,
+    addWorkEvent
 }
 
 const apiUrl = "http://localhost:8850/api";
@@ -98,7 +99,7 @@ function register(email, username, password) {
 //endregion
 
 //region getWorkEventList
-function getWorkEventList(userId, token) {
+function getWorkEventList() {
     console.log('api getWorkEventList');
     let user = JSON.parse(localStorage.getItem('user')); //TODO: move out
     return Axios.get(`${apiUrl}/WorkEvents?filter=%7B%22where%22%3A%7B%22ownerId%22%3A%22${user.id}%22%7D%7D&access_token=${user.token}`)
@@ -115,5 +116,38 @@ function getWorkEventList(userId, token) {
             console.log('workevents=>', workevents)
             return workevents;
         });
+}
+//endregion
+
+//region addWorkEvent
+function addWorkEvent(start, end, title, type, description) {
+    console.log("api addWorkEvent");
+    let user = JSON.parse(localStorage.getItem('user')); //TODO: move out
+    console.log("user", user);
+    //if(user && user.id && user.token){
+        return Axios.post(`${apiUrl}/WorkEvents?access_token=${user.token}`,{
+            start: start,
+            end: end,
+            title: title,
+            type: type,
+            description: description,
+            createdOn: (new Date()).toJSON(),
+            modifiedOn: (new Date()).toJSON()
+        })
+        .then(function(response){
+            console.log('addWorkEvent response', response)
+
+            if(response.status != 200){
+                return Promise.reject(response);
+            }
+
+            return response.data;
+        })
+        .then(workevent => {
+            console.log('workevent=>', workevent)
+            return workevent;
+        });        
+    //}
+
 }
 //endregion

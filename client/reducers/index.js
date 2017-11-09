@@ -85,11 +85,40 @@ function workeventList(state = {}, action) {
 			return state;
 	}
 }
+//endregion
+
+//region addworkevent
+function addworkevent(state = {}, action) {
+	switch(action.type) {
+		case actionTypes.WORKEVENT_ADD_REQUEST:
+			console.log('get workevent action', action)
+			return {
+				fetchingData: true
+			}
+		case actionTypes.WORKEVENT_ADD_SUCCESS:
+			console.log('get workevent action', action)
+			return {
+				fetchingData: false,
+				workevent: action.workevent,
+				error: null
+			}
+		case actionTypes.WORKEVENT_ADD_FAILED:
+			console.log('get workevent action', action)
+			return {
+				fetchingData: false,
+				error: action.error
+			}
+		default:
+			return state;
+	}
+}
+//endregion
 
 const rootReducer = combineReducers({
 	authentication,
 	registration,
-	workeventList
+	workeventList,
+	addworkevent
   });
 
 export default rootReducer;

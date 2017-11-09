@@ -5,7 +5,7 @@ import DatePicker from 'react-bootstrap-date-picker'
 import TimePicker from 'react-bootstrap-time-picker'
 
 import { FieldGroup } from '../common/FieldGroup'
-
+import { workeventActions } from '../../actions/actions.workevent'
 
 class AddWorkEventPage extends React.Component {
     constructor(props){
@@ -17,7 +17,7 @@ class AddWorkEventPage extends React.Component {
             endDate: '',
             endTime: '',
             title: '',
-            type: '',
+            type: 'wedding',
             description: '',
             submitted: false
         };
@@ -28,6 +28,7 @@ class AddWorkEventPage extends React.Component {
         this.handleEndTimeChange = this.handleEndTimeChange.bind(this);
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleStartDateChange(date) {
@@ -65,11 +66,6 @@ class AddWorkEventPage extends React.Component {
         console.log('event change event', e.target);
         const { name, value } = e.target;
         this.setState({ [name]: value });
-
-        var sDateTime, eDateTime;
-        const { startDate, startTime, endDate, endTime } = this.state;
-        sDateTime = this.combineDateTimeStr(startDate, startTime);
-        eDateTime = this.combineDateTimeStr(endDate, endTime);
     }
 
     handleSubmit(e){
@@ -83,7 +79,7 @@ class AddWorkEventPage extends React.Component {
         var end = this.combineDateTimeStr(endDate, endTime);
 
         if( start && end && title ) {
-            dispatch(userActions.login(email, password));
+            dispatch(workeventActions.addWorkEvent(start, end, title, type, description));
         }
     }
 
@@ -93,7 +89,7 @@ class AddWorkEventPage extends React.Component {
 
         return (
             <div className="container">
-                <form>
+                <form onSubmit={this.handleSubmit}>
                     <FormGroup>
                         <ControlLabel>Start date/time</ControlLabel>.
                         <Row>
@@ -153,9 +149,7 @@ class AddWorkEventPage extends React.Component {
                         <FormControl componentClass="textarea" placeholder="Enter Description" name="description" onChange={this.handleChange} />
                     </FormGroup>
 
-                    <Button type="submit">
-                        Submit
-                    </Button>
+                    <Button bsStyle="primary" type="submit">Submit</Button>
                 </form>
             </div>
         );

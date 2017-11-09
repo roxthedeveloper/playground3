@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col, Alert } from 'react-bootstrap';
 
-import { workeventActions } from '../../actions/actions'
+import { workeventActions } from '../../actions/actions.workevent'
 import WorkEventRow from '../common/WorkEventRow';
 
 class HomePage extends React.Component {
@@ -38,7 +38,7 @@ class HomePage extends React.Component {
     componentDidMount(){
         console.log('component did mount');
         const { dispatch } = this.props;
-        dispatch(workeventActions.getWorkEventList('email', 'password'));
+        dispatch(workeventActions.getWorkEventList());
         window.addEventListener('scroll', this.handleScroll);
     }
 
